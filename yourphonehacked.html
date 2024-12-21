@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WARNING - SYSTEM BREACH</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: black;
+            color: red;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            overflow: hidden;
+        }
+        h1, p {
+            text-align: center;
+        }
+        h1 {
+            font-size: 3em;
+            animation: glitch 1s infinite;
+        }
+        p {
+            font-size: 1.5em;
+        }
+        #timer {
+            font-size: 2.5em;
+            color: yellow;
+            margin: 20px 0;
+            animation: flicker 1s infinite;
+        }
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px 0px #00ff00; }
+            50% { text-shadow: -2px -2px 0px #ff0000; }
+            100% { text-shadow: 2px -2px 0px #0000ff; }
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .flashing {
+            animation: flash 0.5s infinite;
+        }
+        @keyframes flash {
+            0% { background-color: black; }
+            50% { background-color: red; }
+            100% { background-color: black; }
+        }
+    </style>
+</head>
+<body>
+    <h1>⚠️ CRITICAL SYSTEM WARNING ⚠️</h1>
+    <p>Your device is under attack. Time left:</p>
+    <div id="timer">10/div>
+    <p><strong>Do not close this page. Immediate action is required!</strong></p>
+    <p id="hacker-text" style="display: none;">🔒 Encrypting your files...</p>
+
+    <audio id="background-sound" loop>
+        <source src="https://www.soundjay.com/button/beep-09.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let countdown = 300; // 5 minutes in seconds
+        const timerElement = document.getElementById('timer');
+        const hackerText = document.getElementById('hacker-text');
+        const backgroundSound = document.getElementById('background-sound');
+
+        // Start the sound
+        backgroundSound.play();
+
+        function startTimer() {
+            const interval = setInterval(() => {
+                const minutes = Math.floor(countdown / 60);
+                const seconds = countdown % 60;
+
+                // Format the timer
+                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                countdown--;
+
+                // Trigger "hacker text" effect midway
+                if (countdown === 150) {
+                    hackerText.style.display = 'block';
+                    document.body.classList.add('flashing');
+                }
+
+                // Stop the timer and show prank reveal
+                if (countdown < 0) {
+                    clearInterval(interval);
+                    backgroundSound.pause();
+                    document.body.innerHTML = `
+                        <h1 style="color: green; text-align: center;">🎉Dr Mt Bhai Ek Majak Tha Sirf! 🎉</h1>
+                        <p style="color: white; text-align: center;">This was a harmless prank! You're safe. 😄</p>
+                    `;
+                }
+            }, 1000);
+        }
+
+        startTimer();
+    </script>
+</body>
+</html>
